@@ -8,6 +8,9 @@ import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin
 import { UsersModule } from './users/users.module';
 import { AuthModule } from '@thallesp/nestjs-better-auth';
 import { auth } from './auth';
+import { CategoryModule } from './category/category.module';
+import { TestController } from './test.controller';
+import { ExpenseModule } from './expense/expense.module';
 
 @Module({
   imports: [
@@ -27,8 +30,10 @@ import { auth } from './auth';
     }),
     PrismaModule,
     UsersModule,
+    CategoryModule,
+    ExpenseModule,
   ],
-  controllers: [AppController],
+  controllers: [TestController],
   providers: [AppService],
 })
 export class AppModule {}
