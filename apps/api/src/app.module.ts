@@ -7,7 +7,7 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from '@thallesp/nestjs-better-auth';
-import { auth } from './auth';
+import { auth } from '@repo/auth/server';
 import { CategoryModule } from './category/category.module';
 import { TestController } from './test.controller';
 import { ExpenseModule } from './expense/expense.module';

@@ -56,6 +56,22 @@ type ExpenseMessageResponse {
   message: String!
 }
 
+type DashboardCategoryTotal {
+  categoryId: String!
+  categoryName: String!
+  totalAmount: Decimal!
+  expenseCount: Int!
+}
+
+type DashboardData {
+  totalAmount: Decimal!
+  currentMonthAmount: Decimal!
+  totalExpenses: Int!
+  currentMonthExpenses: Int!
+  recentExpenses: [Expense!]!
+  expensesByCategory: [DashboardCategoryTotal!]!
+}
+
 """Decimal custom scalar type"""
 scalar Decimal
 
@@ -63,6 +79,7 @@ type Query {
   me: User!
   category(id: String!): Category!
   expenses: [Expense!]!
+  dashboard: DashboardData!
   expense(id: String!): Expense
 }
 

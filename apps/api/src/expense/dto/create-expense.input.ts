@@ -1,4 +1,4 @@
-import { InputType, Float, Field } from '@nestjs/graphql';
+import { InputType, Field } from '@nestjs/graphql';
 import { DecimalScalar } from 'src/common/scalars/decimal.scalar';
 
 @InputType()

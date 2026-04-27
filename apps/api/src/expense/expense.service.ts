@@ -15,6 +15,22 @@ type ExpenseDeleteResponse = {
   message: string;
 };
 
+type DashboardCategoryTotal = {
+  categoryId: string;
+  categoryName: string;
+  totalAmount: string;
+  expenseCount: number;
+};
+
+type DashboardData = {
+  totalAmount: string;
+  currentMonthAmount: string;
+  totalExpenses: number;
+  currentMonthExpenses: number;
+  recentExpenses: Expense[];
+  expensesByCategory: DashboardCategoryTotal[];
+};
+
 @Injectable()
 export class ExpenseService {
   constructor(private prisma: PrismaService) {}
@@ -116,6 +132,74 @@ export class ExpenseService {
     return {
       success: true,
       message: 'Expense deleted successfully.',
+    };
+  }
+
+  async getDashboard(userId: string): Promise<DashboardData> {
+    const now = new Date();
+    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+
+    const [allExpenses, monthExpenses, recentExpenses] = await Promise.all([
+      this.prisma.client.expenses.findMany({
+        where: { userId },
+        include: { category: true },
+      }),
+      this.prisma.client.expenses.findMany({
+        where: {
+          userId,
+          createdAt: {
+            gte: startOfMonth,
+          },
+        },
+      }),
+      this.prisma.client.expenses.findMany({
+        where: { userId },
+        orderBy: { createdAt: 'desc' },
+        take: 5,
+      }),
+    ]);
+
+    const totalAmount = allExpenses.reduce(
+      (sum, expense) => sum + Number(expense.amount),
+      0,
+    );
+    const currentMonthAmount = monthExpenses.reduce(
+      (sum, expense) => sum + Number(expense.amount),
+      0,
+    );
+
+    const categoryAggregation = allExpenses.reduce<
+      Record<string, DashboardCategoryTotal>
+    >((acc, expense) => {
+      const existing = acc[expense.categoryId];
+      const amount = Number(expense.amount);
+      if (!existing) {
+        acc[expense.categoryId] = {
+          categoryId: expense.categoryId,
+          categoryName: expense.category.name,
+          totalAmount: amount.toFixed(2),
+          expenseCount: 1,
+        };
+        return acc;
+      }
+
+      acc[expense.categoryId] = {
+        ...existing,
+        totalAmount: (Number(existing.totalAmount) + amount).toFixed(2),
+        expenseCount: existing.expenseCount + 1,
+      };
+      return acc;
+    }, {});
+
+    return {
+      totalAmount: totalAmount.toFixed(2),
+      currentMonthAmount: currentMonthAmount.toFixed(2),
+      totalExpenses: allExpenses.length,
+      currentMonthExpenses: monthExpenses.length,
+      recentExpenses: recentExpenses.map((expense) => this.toExpenseEntity(expense)),
+      expensesByCategory: Object.values(categoryAggregation).sort(
+        (a, b) => Number(b.totalAmount) - Number(a.totalAmount),
+      ),
     };
   }
 }
