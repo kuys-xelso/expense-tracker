@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { CreateCategoryInput } from './dto/create-category.input';
-import { UpdateCategoryInput } from './dto/update-category.input';
+import { CreateCategoryInput } from './dto/create-expense-category.input';
+import { UpdateCategoryInput } from './dto/update-expense-category.input';
 import { PrismaService } from '../prisma/prisma.service';
 @Injectable()
 export class CategoryService {
   constructor(private prisma: PrismaService) {}
 
   async create(createCategoryInput: CreateCategoryInput, userId: string) {
-    const category = await this.prisma.client.category.create({
+    const category = await this.prisma.client.expenseCategory.create({
       data: {
         userId,
         ...createCategoryInput,
@@ -21,7 +21,7 @@ export class CategoryService {
   }
 
   async findAll(userId: string) {
-    return this.prisma.client.category.findMany({
+    return this.prisma.client.expenseCategory.findMany({
       where: {
         userId,
       },
@@ -29,7 +29,7 @@ export class CategoryService {
   }
 
   async findOne(id: string, userId: string) {
-    return this.prisma.client.category.findFirst({
+    return this.prisma.client.expenseCategory.findFirst({
       where: {
         id,
         userId,
@@ -42,7 +42,7 @@ export class CategoryService {
     updateCategoryInput: UpdateCategoryInput,
     userId: string,
   ) {
-    const category = await this.prisma.client.category.findFirst({
+    const category = await this.prisma.client.expenseCategory.findFirst({
       where: {
         id,
         userId,
@@ -55,7 +55,7 @@ export class CategoryService {
       );
     }
 
-    const updatedCategory = await this.prisma.client.category.update({
+    const updatedCategory = await this.prisma.client.expenseCategory.update({
       where: { id },
       data: updateCategoryInput,
     });
@@ -67,7 +67,7 @@ export class CategoryService {
   }
 
   async remove(id: string, userId: string) {
-    const category = await this.prisma.client.category.findFirst({
+    const category = await this.prisma.client.expenseCategory.findFirst({
       where: {
         id,
         userId,
@@ -80,7 +80,7 @@ export class CategoryService {
       );
     }
 
-    await this.prisma.client.category.delete({
+    await this.prisma.client.expenseCategory.delete({
       where: { id },
     });
 

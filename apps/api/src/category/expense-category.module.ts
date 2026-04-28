@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { CategoryService } from './category.service';
-import { CategoryResolver } from './category.resolver';
+import { CategoryService } from './expense-category.service';
+import { CategoryResolver } from './expense-category.resolver';
 
 @Module({
   providers: [CategoryResolver, CategoryService],

@@ -167,7 +167,7 @@ exports.Prisma.VerificationScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
-exports.Prisma.CategoryScalarFieldEnum = {
+exports.Prisma.ExpenseCategoryScalarFieldEnum = {
   id: 'id',
   name: 'name',
   iconName: 'iconName',
@@ -183,6 +183,26 @@ exports.Prisma.ExpensesScalarFieldEnum = {
   categoryId: 'categoryId',
   userId: 'userId',
   amount: 'amount',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.IncomeScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  amount: 'amount',
+  categoryId: 'categoryId',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.IncomeCategoryScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  iconName: 'iconName',
+  userId: 'userId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -208,8 +228,10 @@ exports.Prisma.ModelName = {
   Session: 'Session',
   Account: 'Account',
   Verification: 'Verification',
-  Category: 'Category',
-  Expenses: 'Expenses'
+  ExpenseCategory: 'ExpenseCategory',
+  Expenses: 'Expenses',
+  Income: 'Income',
+  IncomeCategory: 'IncomeCategory'
 };
 
 /**

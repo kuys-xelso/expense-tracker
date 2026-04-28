@@ -72,6 +72,48 @@ type DashboardData {
   expensesByCategory: [DashboardCategoryTotal!]!
 }
 
+type IncomeCategory {
+  id: String!
+  name: String!
+  iconName: String!
+  userId: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type IncomeCategoryResponse {
+  success: Boolean!
+  message: String!
+  category: IncomeCategory!
+}
+
+type IncomeCategoryMessageResponse {
+  success: Boolean!
+  message: String!
+}
+
+type Income {
+  id: String!
+  name: String!
+  description: String
+  amount: Decimal!
+  categoryId: String!
+  userId: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type IncomeResponse {
+  success: Boolean!
+  message: String!
+  income: Income!
+}
+
+type IncomeMessageResponse {
+  success: Boolean!
+  message: String!
+}
+
 """Decimal custom scalar type"""
 scalar Decimal
 
@@ -81,6 +123,10 @@ type Query {
   expenses: [Expense!]!
   dashboard: DashboardData!
   expense(id: String!): Expense
+  incomeCategories: [IncomeCategory!]!
+  incomeCategory(id: String!): IncomeCategory
+  incomes: [Income!]!
+  income(id: String!): Income
 }
 
 type Mutation {
@@ -91,6 +137,12 @@ type Mutation {
   createExpense(createExpenseInput: CreateExpenseInput!): ExpenseResponse!
   updateExpense(updateExpenseInput: UpdateExpenseInput!): ExpenseResponse!
   removeExpense(id: String!): ExpenseMessageResponse!
+  createIncomeCategory(createIncomeCategoryInput: CreateIncomeCategoryInput!): IncomeCategoryResponse!
+  updateIncomeCategory(updateIncomeCategoryInput: UpdateIncomeCategoryInput!): IncomeCategoryResponse!
+  removeIncomeCategory(id: String!): IncomeCategoryMessageResponse!
+  createIncome(createIncomeInput: CreateIncomeInput!): IncomeResponse!
+  updateIncome(updateIncomeInput: UpdateIncomeInput!): IncomeResponse!
+  removeIncome(id: String!): IncomeMessageResponse!
 }
 
 input UpdateProfileInput {
@@ -117,6 +169,32 @@ input CreateExpenseInput {
 }
 
 input UpdateExpenseInput {
+  name: String
+  description: String
+  amount: Decimal
+  categoryId: String
+  id: String!
+}
+
+input CreateIncomeCategoryInput {
+  name: String!
+  iconName: String!
+}
+
+input UpdateIncomeCategoryInput {
+  name: String
+  iconName: String
+  id: String!
+}
+
+input CreateIncomeInput {
+  name: String!
+  description: String
+  amount: Decimal!
+  categoryId: String!
+}
+
+input UpdateIncomeInput {
   name: String
   description: String
   amount: Decimal

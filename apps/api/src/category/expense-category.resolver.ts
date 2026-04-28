@@ -1,8 +1,8 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
-import { CategoryService } from './category.service';
-import { Category } from './entities/category.entity';
-import { CreateCategoryInput } from './dto/create-category.input';
-import { UpdateCategoryInput } from './dto/update-category.input';
+import { CategoryService } from './expense-category.service';
+import { Category } from './entities/expense-category.entity';
+import { CreateCategoryInput } from './dto/create-expense-category.input';
+import { UpdateCategoryInput } from './dto/update-expense-category.input';
 import { Session } from '@thallesp/nestjs-better-auth';
 import { ObjectType, Field } from '@nestjs/graphql';
 

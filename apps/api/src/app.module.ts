@@ -8,9 +8,11 @@ import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin
 import { UsersModule } from './users/users.module';
 import { AuthModule } from '@thallesp/nestjs-better-auth';
 import { auth } from '@repo/auth/server';
-import { CategoryModule } from './category/category.module';
+import { CategoryModule } from './category/expense-category.module';
 import { TestController } from './test.controller';
 import { ExpenseModule } from './expense/expense.module';
+import { IncomeCategoryModule } from './income-category/income-category.module';
+import { IncomeModule } from './income/income.module';
 
 @Module({
   imports: [
@@ -32,6 +34,8 @@ import { ExpenseModule } from './expense/expense.module';
     UsersModule,
     CategoryModule,
     ExpenseModule,
+    IncomeCategoryModule,
+    IncomeModule,
   ],
   controllers: [TestController],
   providers: [AppService],

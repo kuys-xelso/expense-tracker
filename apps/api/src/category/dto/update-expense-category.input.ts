@@ -1,4 +1,4 @@
-import { CreateCategoryInput } from './create-category.input';
+import { CreateCategoryInput } from './create-expense-category.input';
 import { InputType, Field, Int, PartialType } from '@nestjs/graphql';
 
 @InputType()

@@ -46,7 +46,7 @@ export class ExpenseService {
     createExpenseInput: CreateExpenseInput,
     userId: string,
   ): Promise<ExpenseMutationResponse> {
-    const category = await this.prisma.client.category.findFirst({
+    const category = await this.prisma.client.expenseCategory.findFirst({
       where: {
         id: createExpenseInput.categoryId,
         userId,
@@ -191,13 +191,18 @@ export class ExpenseService {
       return acc;
     }, {});
 
+    const expensesByCategory: DashboardCategoryTotal[] =
+      Object.values(categoryAggregation);
+
     return {
       totalAmount: totalAmount.toFixed(2),
       currentMonthAmount: currentMonthAmount.toFixed(2),
       totalExpenses: allExpenses.length,
       currentMonthExpenses: monthExpenses.length,
-      recentExpenses: recentExpenses.map((expense) => this.toExpenseEntity(expense)),
-      expensesByCategory: Object.values(categoryAggregation).sort(
+      recentExpenses: recentExpenses.map((expense) =>
+        this.toExpenseEntity(expense),
+      ),
+      expensesByCategory: expensesByCategory.sort(
         (a, b) => Number(b.totalAmount) - Number(a.totalAmount),
       ),
     };

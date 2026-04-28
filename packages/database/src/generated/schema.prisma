@@ -16,17 +16,20 @@ datasource db {
 }
 
 model User {
-  id            String     @id
-  name          String
-  email         String
-  emailVerified Boolean    @default(false)
-  image         String?
-  createdAt     DateTime   @default(now())
-  updatedAt     DateTime   @updatedAt
-  sessions      Session[]
-  accounts      Account[]
-  categories    Category[]
-  expenses      Expenses[]
+  id                String            @id
+  name              String
+  email             String
+  emailVerified     Boolean           @default(false)
+  image             String?
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+  sessions          Session[]
+  accounts          Account[]
+  expenseCategories ExpenseCategory[]
+  incomeCategories  IncomeCategory[]
+
+  expenses Expenses[]
+  incomes  Income[]
 
   @@unique([email])
   @@map("user")
@@ -84,7 +87,7 @@ model Verification {
   @@schema("global")
 }
 
-model Category {
+model ExpenseCategory {
   id       String @id @default(uuid())
   name     String
   iconName String
@@ -96,24 +99,61 @@ model Category {
   expenses  Expenses[]
 
   @@index([userId])
-  @@map("category")
+  @@map("expense_category")
   @@schema("global")
 }
 
 model Expenses {
-  id          String   @id @default(uuid())
+  id          String          @id @default(uuid())
   name        String
   description String?
-  category    Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  category    ExpenseCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   categoryId  String
   userId      String
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  amount      Decimal  @db.Decimal(10, 2)
+  user        User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  amount      Decimal         @db.Decimal(10, 2)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@index([categoryId])
   @@map("expenses")
+  @@schema("global")
+}
+
+model Income {
+  id          String  @id @default(uuid())
+  name        String
+  description String?
+  amount      Decimal @db.Decimal(10, 2)
+
+  categoryId String
+  category   IncomeCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([categoryId])
+  @@map("income")
+  @@schema("global")
+}
+
+model IncomeCategory {
+  id       String @id @default(uuid())
+  name     String
+  iconName String
+  userId   String
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  incomes Income[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@map("income_category")
   @@schema("global")
 }
