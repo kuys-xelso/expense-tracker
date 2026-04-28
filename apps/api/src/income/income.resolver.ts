@@ -1,10 +1,11 @@
-import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { IncomeService } from './income.service';
 import { Income } from './entities/income.entity';
 import { CreateIncomeInput } from './dto/create-income.input';
 import { UpdateIncomeInput } from './dto/update-income.input';
 import { ObjectType, Field } from '@nestjs/graphql';
 import { Session } from '@thallesp/nestjs-better-auth';
+import { DecimalScalar } from '../common/scalars/decimal.scalar';
 
 @ObjectType()
 class IncomeResponse {
@@ -27,6 +28,42 @@ class IncomeMessageResponse {
   message!: string;
 }
 
+@ObjectType()
+class IncomeDashboardCategoryTotal {
+  @Field(() => String)
+  categoryId!: string;
+
+  @Field(() => String)
+  categoryName!: string;
+
+  @Field(() => DecimalScalar)
+  totalAmount!: string;
+
+  @Field(() => Int)
+  incomeCount!: number;
+}
+
+@ObjectType()
+class IncomeDashboardData {
+  @Field(() => DecimalScalar)
+  totalAmount!: string;
+
+  @Field(() => DecimalScalar)
+  currentMonthAmount!: string;
+
+  @Field(() => Int)
+  totalIncomes!: number;
+
+  @Field(() => Int)
+  currentMonthIncomes!: number;
+
+  @Field(() => [Income])
+  recentIncomes!: Income[];
+
+  @Field(() => [IncomeDashboardCategoryTotal])
+  incomesByCategory!: IncomeDashboardCategoryTotal[];
+}
+
 @Resolver(() => Income)
 export class IncomeResolver {
   constructor(private readonly incomeService: IncomeService) {}
@@ -42,6 +79,11 @@ export class IncomeResolver {
   @Query(() => [Income], { name: 'incomes' })
   findAllIncomes(@Session() session: any): Promise<Income[]> {
     return this.incomeService.findAll(session.user.id);
+  }
+
+  @Query(() => IncomeDashboardData, { name: 'incomeDashboard' })
+  incomeDashboard(@Session() session: any): Promise<IncomeDashboardData> {
+    return this.incomeService.getDashboard(session.user.id);
   }
 
   @Query(() => Income, { name: 'income', nullable: true })

@@ -29,35 +29,46 @@ async function isAuthenticated(request: NextRequest) {
   const cookieHeader = request.headers.get("cookie");
   if (!cookieHeader) return false;
 
-  const response = await fetch(`${AUTH_SERVER_URL}/api/auth/get-session`, {
-    method: "GET",
-    headers: {
-      cookie: cookieHeader,
-    },
-    cache: "no-store",
-  });
+  try {
+    const response = await fetch(`${AUTH_SERVER_URL}/api/auth/get-session`, {
+      method: "GET",
+      headers: {
+        cookie: cookieHeader,
+      },
+      cache: "no-store",
+    });
 
-  if (!response.ok) return false;
+    if (!response.ok) return false;
 
-  const payload = (await response.json()) as unknown;
-  return hasValidSessionPayload(payload);
+    const payload = (await response.json()) as unknown;
+    return hasValidSessionPayload(payload);
+  } catch (error) {
+    console.error("Middleware fetch failed. Is the API running on", AUTH_SERVER_URL, "?", error);
+    return false;
+  }
 }
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const authed = await isAuthenticated(request);
 
-  if (pathname.startsWith("/dashboard") && !authed) {
+  // Since we removed /dashboard from the URL, we need to protect the actual paths
+  const protectedRoutes = ["/overview", "/analytics", "/categories"];
+  const isProtectedRoute = protectedRoutes.some((route) =>
+    pathname.startsWith(route)
+  );
+
+  if (isProtectedRoute && !authed) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
-  if (pathname.startsWith("/login") && authed) {
-    return NextResponse.redirect(new URL("/dashboard", request.url));
+  if ((pathname.startsWith("/login") || pathname.startsWith("/signup")) && authed) {
+    return NextResponse.redirect(new URL("/overview", request.url));
   }
 
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/login"],
+  matcher: ["/overview/:path*", "/analytics/:path*", "/categories/:path*", "/login", "/signup"],
 };

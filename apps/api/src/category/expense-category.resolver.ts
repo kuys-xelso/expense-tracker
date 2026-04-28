@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { CategoryService } from './expense-category.service';
 import { Category } from './entities/expense-category.entity';
 import { CreateCategoryInput } from './dto/create-expense-category.input';
@@ -39,7 +39,7 @@ export class CategoryResolver {
     return this.categoryService.create(createCategoryInput, session.user.id);
   }
 
-  @Query(() => [Category], { name: 'category' })
+  @Query(() => [Category], { name: 'categories' })
   findAll(@Session() session: any) {
     return this.categoryService.findAll(session.user.id);
   }

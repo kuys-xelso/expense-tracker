@@ -114,11 +114,28 @@ type IncomeMessageResponse {
   message: String!
 }
 
+type IncomeDashboardCategoryTotal {
+  categoryId: String!
+  categoryName: String!
+  totalAmount: Decimal!
+  incomeCount: Int!
+}
+
+type IncomeDashboardData {
+  totalAmount: Decimal!
+  currentMonthAmount: Decimal!
+  totalIncomes: Int!
+  currentMonthIncomes: Int!
+  recentIncomes: [Income!]!
+  incomesByCategory: [IncomeDashboardCategoryTotal!]!
+}
+
 """Decimal custom scalar type"""
 scalar Decimal
 
 type Query {
   me: User!
+  categories: [Category!]!
   category(id: String!): Category!
   expenses: [Expense!]!
   dashboard: DashboardData!
@@ -126,6 +143,7 @@ type Query {
   incomeCategories: [IncomeCategory!]!
   incomeCategory(id: String!): IncomeCategory
   incomes: [Income!]!
+  incomeDashboard: IncomeDashboardData!
   income(id: String!): Income
 }
 

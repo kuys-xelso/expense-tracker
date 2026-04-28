@@ -15,6 +15,22 @@ type IncomeDeleteResponse = {
   message: string;
 };
 
+type IncomeDashboardCategoryTotal = {
+  categoryId: string;
+  categoryName: string;
+  totalAmount: string;
+  incomeCount: number;
+};
+
+type IncomeDashboardData = {
+  totalAmount: string;
+  currentMonthAmount: string;
+  totalIncomes: number;
+  currentMonthIncomes: number;
+  recentIncomes: Income[];
+  incomesByCategory: IncomeDashboardCategoryTotal[];
+};
+
 @Injectable()
 export class IncomeService {
   constructor(private prisma: PrismaService) {}
@@ -116,6 +132,77 @@ export class IncomeService {
     return {
       success: true,
       message: 'Income deleted successfully.',
+    };
+  }
+
+  async getDashboard(userId: string): Promise<IncomeDashboardData> {
+    const now = new Date();
+    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+
+    const [allIncomes, monthIncomes, recentIncomes] = await Promise.all([
+      this.prisma.client.income.findMany({
+        where: { userId },
+        include: { category: true },
+      }),
+      this.prisma.client.income.findMany({
+        where: {
+          userId,
+          createdAt: {
+            gte: startOfMonth,
+          },
+        },
+      }),
+      this.prisma.client.income.findMany({
+        where: { userId },
+        orderBy: { createdAt: 'desc' },
+        take: 5,
+      }),
+    ]);
+
+    const totalAmount = allIncomes.reduce(
+      (sum, income) => sum + Number(income.amount),
+      0,
+    );
+    const currentMonthAmount = monthIncomes.reduce(
+      (sum, income) => sum + Number(income.amount),
+      0,
+    );
+
+    const categoryAggregation = allIncomes.reduce<
+      Record<string, IncomeDashboardCategoryTotal>
+    >((acc, income) => {
+      const existing = acc[income.categoryId];
+      const amount = Number(income.amount);
+      if (!existing) {
+        acc[income.categoryId] = {
+          categoryId: income.categoryId,
+          categoryName: income.category.name,
+          totalAmount: amount.toFixed(2),
+          incomeCount: 1,
+        };
+        return acc;
+      }
+
+      acc[income.categoryId] = {
+        ...existing,
+        totalAmount: (Number(existing.totalAmount) + amount).toFixed(2),
+        incomeCount: existing.incomeCount + 1,
+      };
+      return acc;
+    }, {});
+
+    const incomesByCategory: IncomeDashboardCategoryTotal[] =
+      Object.values(categoryAggregation);
+
+    return {
+      totalAmount: totalAmount.toFixed(2),
+      currentMonthAmount: currentMonthAmount.toFixed(2),
+      totalIncomes: allIncomes.length,
+      currentMonthIncomes: monthIncomes.length,
+      recentIncomes: recentIncomes.map((income) => this.toIncomeEntity(income)),
+      incomesByCategory: incomesByCategory.sort(
+        (a, b) => Number(b.totalAmount) - Number(a.totalAmount),
+      ),
     };
   }
 }

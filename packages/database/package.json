@@ -12,7 +12,7 @@
     }
   },
   "scripts": {
-    "build": "tsc -p tsconfig.json && if not exist dist\\generated (mkdir dist\\generated) & xcopy /E /I /Y src\\generated dist\\generated >nul",
+    "build": "tsc -p tsconfig.json && if exist dist\\generated rmdir /S /Q dist\\generated & xcopy /E /I /Y src\\generated dist\\generated >nul",
     "generate": "prisma generate",
     "db:push": "prisma db push",
     "db:studio": "prisma studio"

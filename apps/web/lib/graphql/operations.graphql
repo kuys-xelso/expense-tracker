@@ -1,0 +1,22 @@
+mutation CreateCategory($input: CreateCategoryInput!) {
+  createCategory(createCategoryInput: $input) {
+    success
+    message
+    category {
+      id
+      name
+      iconName
+      userId
+      createdAt
+    }
+  }
+}
+
+query GetCategories {
+  categories {
+    id
+    name
+    iconName
+    createdAt
+  }
+}

@@ -1,29 +1,29 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 
-import { NavMain } from "@/components/nav-main"
-import { NavProjects } from "@/components/nav-projects"
-import { NavUser } from "@/components/nav-user"
-import { TeamSwitcher } from "@/components/team-switcher"
+import { NavMain } from "@/components/nav-main";
+import { NavProjects } from "@/components/nav-projects";
+import { NavUser } from "@/components/nav-user";
+import { TeamSwitcher } from "@/components/team-switcher";
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
   SidebarRail,
-} from "@/components/ui/sidebar"
-import { 
-  GalleryVerticalEndIcon, 
-  AudioLinesIcon, 
-  LayoutDashboardIcon, 
-  ArrowRightLeftIcon, 
-  TagsIcon, 
-  Settings2Icon, 
-  WalletIcon, 
-  LandmarkIcon, 
-  CreditCardIcon 
-} from "lucide-react"
+} from "@/components/ui/sidebar";
+import {
+  GalleryVerticalEndIcon,
+  AudioLinesIcon,
+  LayoutDashboardIcon,
+  ArrowRightLeftIcon,
+  TagsIcon,
+  Settings2Icon,
+  WalletIcon,
+  LandmarkIcon,
+  CreditCardIcon,
+} from "lucide-react";
 
 // This is sample data.
 const data = {
@@ -35,48 +35,36 @@ const data = {
   teams: [
     {
       name: "Personal",
-      logo: (
-        <GalleryVerticalEndIcon
-        />
-      ),
+      logo: <GalleryVerticalEndIcon />,
       plan: "Free",
     },
     {
       name: "Family",
-      logo: (
-        <AudioLinesIcon
-        />
-      ),
+      logo: <AudioLinesIcon />,
       plan: "Pro",
     },
   ],
   navMain: [
     {
       title: "Dashboard",
-      url: "/dashboard",
-      icon: (
-        <LayoutDashboardIcon
-        />
-      ),
+      url: "/",
+      icon: <LayoutDashboardIcon />,
       isActive: true,
       items: [
         {
           title: "Overview",
-          url: "/dashboard/overview",
+          url: "/overview",
         },
         {
           title: "Analytics",
-          url: "/dashboard/analytics",
+          url: "/analytics",
         },
       ],
     },
     {
       title: "Transactions",
       url: "#",
-      icon: (
-        <ArrowRightLeftIcon
-        />
-      ),
+      icon: <ArrowRightLeftIcon />,
       items: [
         {
           title: "All Transactions",
@@ -94,25 +82,19 @@ const data = {
     },
     {
       title: "Categories",
-      url: "#",
-      icon: (
-        <TagsIcon
-        />
-      ),
+      url: "/categories",
+      icon: <TagsIcon />,
       items: [
         {
           title: "Manage Categories",
-          url: "#",
+          url: "/categories",
         },
       ],
     },
     {
       title: "Settings",
       url: "#",
-      icon: (
-        <Settings2Icon
-        />
-      ),
+      icon: <Settings2Icon />,
       items: [
         {
           title: "General",
@@ -133,29 +115,20 @@ const data = {
     {
       name: "Cash",
       url: "#",
-      icon: (
-        <WalletIcon
-        />
-      ),
+      icon: <WalletIcon />,
     },
     {
       name: "Bank Account",
       url: "#",
-      icon: (
-        <LandmarkIcon
-        />
-      ),
+      icon: <LandmarkIcon />,
     },
     {
       name: "Credit Card",
       url: "#",
-      icon: (
-        <CreditCardIcon
-        />
-      ),
+      icon: <CreditCardIcon />,
     },
   ],
-}
+};
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
@@ -172,5 +145,5 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
-  )
+  );
 }

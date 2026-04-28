@@ -46,22 +46,25 @@ export async function getServerSession() {
 
   if (!cookieHeader) return null;
 
-  const response = await fetch(`${AUTH_SERVER_URL}/api/auth/get-session`, {
-    method: "GET",
-    headers: {
-      cookie: cookieHeader,
-    },
-    cache: "no-store",
-  });
+  try {
+    const response = await fetch(`${AUTH_SERVER_URL}/api/auth/get-session`, {
+      method: "GET",
+      headers: {
+        cookie: cookieHeader,
+      },
+      cache: "no-store",
+    });
 
-  if (!response.ok) return null;
+    if (!response.ok) return null;
 
-  const payload = (await response.json()) as unknown;
-  return normalizeSession(payload);
+    const payload = (await response.json()) as unknown;
+    return normalizeSession(payload);
+  } catch {
+    return null;
+  }
 }
 
 export async function hasServerSession() {
   const session = await getServerSession();
   return Boolean(session?.session && session?.user);
 }
-
