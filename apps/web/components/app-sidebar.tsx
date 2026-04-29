@@ -47,7 +47,7 @@ const data = {
   navMain: [
     {
       title: "Dashboard",
-      url: "/",
+      url: "/overview",
       icon: <LayoutDashboardIcon />,
       isActive: true,
       items: [
@@ -67,27 +67,12 @@ const data = {
       icon: <ArrowRightLeftIcon />,
       items: [
         {
-          title: "All Transactions",
-          url: "#",
-        },
-        {
           title: "Income",
-          url: "#",
+          url: "/income",
         },
         {
           title: "Expenses",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Categories",
-      url: "/categories",
-      icon: <TagsIcon />,
-      items: [
-        {
-          title: "Manage Categories",
-          url: "/categories",
+          url: "/expenses",
         },
       ],
     },
@@ -97,35 +82,14 @@ const data = {
       icon: <Settings2Icon />,
       items: [
         {
-          title: "General",
-          url: "#",
+          title: "Categories",
+          url: "/categories",
         },
         {
-          title: "Preferences",
-          url: "#",
-        },
-        {
-          title: "Accounts",
+          title: "Profile",
           url: "#",
         },
       ],
-    },
-  ],
-  projects: [
-    {
-      name: "Cash",
-      url: "#",
-      icon: <WalletIcon />,
-    },
-    {
-      name: "Bank Account",
-      url: "#",
-      icon: <LandmarkIcon />,
-    },
-    {
-      name: "Credit Card",
-      url: "#",
-      icon: <CreditCardIcon />,
     },
   ],
 };
@@ -138,7 +102,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} />
