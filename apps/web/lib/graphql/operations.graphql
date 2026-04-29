@@ -20,3 +20,51 @@ query GetCategories {
     createdAt
   }
 }
+
+query GetExpenses {
+  expenses {
+    id
+    name
+    description
+    amount
+    createdAt
+    categoryId
+  }
+}
+
+mutation CreateExpense($input: CreateExpenseInput!) {
+  createExpense(createExpenseInput: $input) {
+    success
+    message
+    expense {
+      id
+      name
+      description
+      amount
+      createdAt
+      categoryId
+    }
+  }
+}
+
+mutation UpdateExpense($input: UpdateExpenseInput!) {
+  updateExpense(updateExpenseInput: $input) {
+    success
+    message
+    expense {
+      id
+      name
+      description
+      amount
+      createdAt
+      categoryId
+    }
+  }
+}
+
+mutation RemoveExpense($id: String!) {
+  removeExpense(id: $id) {
+    success
+    message
+  }
+}

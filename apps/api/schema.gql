@@ -37,7 +37,7 @@ type CategoryMessageResponse {
 type Expense {
   id: String!
   name: String!
-  description: String!
+  description: String
   amount: Decimal!
   categoryId: String!
   userId: String!
