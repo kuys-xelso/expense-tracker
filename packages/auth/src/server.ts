@@ -7,7 +7,7 @@ export const auth = betterAuth({
     provider: "postgresql",
   }),
   secret: process.env.BETTER_AUTH_SECRET,
-  basePath: "api/auth",
+  basePath: "/api/auth",
   baseURL: process.env.BETTER_AUTH_URL || "http://localhost:3000",
   trustedOrigins: ["http://localhost:3001", "http://localhost:3000"],
   cookiePrefix: "better-auth",

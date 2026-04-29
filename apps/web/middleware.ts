@@ -53,7 +53,13 @@ export async function middleware(request: NextRequest) {
   const authed = await isAuthenticated(request);
 
   // Since we removed /dashboard from the URL, we need to protect the actual paths
-  const protectedRoutes = ["/overview", "/analytics", "/categories"];
+  const protectedRoutes = [
+    "/overview",
+    "/analytics",
+    "/categories",
+    "/expenses",
+    "/income",
+  ];
   const isProtectedRoute = protectedRoutes.some((route) =>
     pathname.startsWith(route)
   );
@@ -70,5 +76,13 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/overview/:path*", "/analytics/:path*", "/categories/:path*", "/login", "/signup"],
+  matcher: [
+    "/overview/:path*",
+    "/analytics/:path*",
+    "/categories/:path*",
+    "/expenses/:path*",
+    "/income/:path*",
+    "/login",
+    "/signup",
+  ],
 };

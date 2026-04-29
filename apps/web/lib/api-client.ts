@@ -4,11 +4,24 @@ const API_URL =
 import type { TypedDocumentNode } from "@graphql-typed-document-node/core";
 import { print } from "graphql";
 import {
+  CreateExpenseDocument,
   CreateCategoryDocument,
+  GetExpensesDocument,
   GetCategoriesDocument,
+  RemoveExpenseDocument,
+  UpdateExpenseDocument,
+  type CreateExpenseInput,
   type CreateCategoryMutation,
   type CreateCategoryMutationVariables,
+  type CreateExpenseMutation,
+  type CreateExpenseMutationVariables,
   type GetCategoriesQuery,
+  type GetExpensesQuery,
+  type RemoveExpenseMutation,
+  type RemoveExpenseMutationVariables,
+  type UpdateExpenseInput,
+  type UpdateExpenseMutation,
+  type UpdateExpenseMutationVariables,
 } from "./graphql/generated";
 
 type GraphQLResponse<T> = {
@@ -75,4 +88,67 @@ export async function createCategory(name: string, iconName: string) {
 export async function getCategories() {
   const data = await graphqlRequest<GetCategoriesQuery>(GetCategoriesDocument);
   return data.categories;
+}
+
+export type ExpenseDTO = {
+  id: string;
+  name: string;
+  description: string | null;
+  amount: string;
+  categoryId: string;
+};
+
+export async function getExpenses() {
+  const data = await graphqlRequest<GetExpensesQuery>(GetExpensesDocument);
+  return data.expenses;
+}
+
+export async function createExpense(input: {
+  name: string;
+  amount: string;
+  categoryId: string;
+  description?: string;
+}) {
+  const payload: CreateExpenseInput = {
+    name: input.name,
+    amount: input.amount,
+    categoryId: input.categoryId,
+    description: input.description ?? null,
+  };
+
+  const data = await graphqlRequest<
+    CreateExpenseMutation,
+    CreateExpenseMutationVariables
+  >(CreateExpenseDocument, { input: payload });
+  return data.createExpense;
+}
+
+export async function updateExpense(input: {
+  id: string;
+  name?: string;
+  amount?: string;
+  categoryId?: string;
+  description?: string;
+}) {
+  const payload: UpdateExpenseInput = {
+    id: input.id,
+    name: input.name ?? null,
+    amount: input.amount ?? null,
+    categoryId: input.categoryId ?? null,
+    description: input.description ?? null,
+  };
+
+  const data = await graphqlRequest<
+    UpdateExpenseMutation,
+    UpdateExpenseMutationVariables
+  >(UpdateExpenseDocument, { input: payload });
+  return data.updateExpense;
+}
+
+export async function removeExpense(id: string) {
+  const data = await graphqlRequest<
+    RemoveExpenseMutation,
+    RemoveExpenseMutationVariables
+  >(RemoveExpenseDocument, { id });
+  return data.removeExpense;
 }
