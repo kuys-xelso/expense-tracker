@@ -70,6 +70,7 @@ const CATEGORY_COLORS = [
 export default function CategoriesPage() {
   const [categoryName, setCategoryName] = useState("");
   const [selectedIcon, setSelectedIcon] = useState("Wallet");
+
   const [categories, setCategories] = useState<
     Array<{
       id: string;
@@ -151,14 +152,15 @@ export default function CategoriesPage() {
 
   return (
     <div className="flex flex-col gap-8 p-8 animate-in fade-in duration-500">
-      <div className="flex flex-col gap-2">
-        <h1 className="text-4xl font-extrabold tracking-tight bg-linear-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
-          Categories
-        </h1>
-        <p className="text-muted-foreground text-lg">
-          Organize your spending by creating custom categories with unique
-          icons.
-        </p>
+      <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-2">
+          <h1 className="text-4xl font-extrabold tracking-tight bg-linear-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
+            Categories
+          </h1>
+          <p className="text-muted-foreground text-lg">
+            Organize your finances by creating custom categories.
+          </p>
+        </div>
       </div>
 
       <div className="grid gap-8 lg:grid-cols-12">
@@ -276,9 +278,6 @@ export default function CategoriesPage() {
                       <h3 className="font-semibold text-foreground truncate group-hover:text-primary transition-colors">
                         {category.name}
                       </h3>
-                      <p className="text-xs text-muted-foreground">
-                        Expense Category
-                      </p>
                     </div>
                   </div>
                 ))}
