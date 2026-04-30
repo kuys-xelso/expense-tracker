@@ -6,7 +6,9 @@ type BetterAuthSession = {
 };
 
 const AUTH_SERVER_URL =
-  process.env.NEXT_PUBLIC_BETTER_AUTH_URL || "http://localhost:3001";
+  process.env.NEXT_PUBLIC_BACKEND_URL ||
+  process.env.NEXT_PUBLIC_BETTER_AUTH_URL ||
+  "http://localhost:3001";
 
 function normalizeSession(payload: unknown): BetterAuthSession | null {
   if (!payload || typeof payload !== "object") return null;
