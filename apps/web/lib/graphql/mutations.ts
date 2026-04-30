@@ -1,5 +1,14 @@
 import { gql } from "./generated";
 
+export const REMOVE_CATEGORY = gql(`
+  mutation RemoveCategory($id: String!) {
+    removeCategory(id: $id) {
+      success
+      message
+    }
+  }
+`);
+
 export const CREATE_CATEGORY = gql(`
   mutation CreateCategory($input: CreateCategoryInput!) {
     createCategory(createCategoryInput: $input) {
