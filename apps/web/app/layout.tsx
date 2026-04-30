@@ -3,6 +3,7 @@ import "./globals.css";
 import { Geist } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { ApolloProvider } from "@/lib/apollo/provider";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -21,9 +22,11 @@ export default function RootLayout({
       lang="en"
       className={cn("h-full antialiased", "font-sans", geist.variable)}
     >
-      <TooltipProvider>
-        <body className="min-h-full flex flex-col">{children}</body>
-      </TooltipProvider>
+      <body className="min-h-full flex flex-col">
+        <ApolloProvider>
+          <TooltipProvider>{children}</TooltipProvider>
+        </ApolloProvider>
+      </body>
     </html>
   );
 }

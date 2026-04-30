@@ -11,6 +11,8 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@apollo/client": "^4.0.0",
+    "@apollo/client-integration-nextjs": "^0.14.1",
     "@repo/auth": "*",
     "@tabler/icons-react": "^3.41.1",
     "@tanstack/react-table": "^8.21.3",

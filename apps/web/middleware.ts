@@ -1,7 +1,9 @@
 import { NextResponse, type NextRequest } from "next/server";
 
 const AUTH_SERVER_URL =
-  process.env.NEXT_PUBLIC_BETTER_AUTH_URL || "http://localhost:3001";
+  process.env.NEXT_PUBLIC_BACKEND_URL ||
+  process.env.NEXT_PUBLIC_BETTER_AUTH_URL ||
+  "http://localhost:3001";
 
 function hasValidSessionPayload(payload: unknown) {
   if (!payload || typeof payload !== "object") return false;
