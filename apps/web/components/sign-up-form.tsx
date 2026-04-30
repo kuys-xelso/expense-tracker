@@ -42,7 +42,7 @@ export function SignUpForm({
         email,
         password,
         name,
-        callbackURL: "/dashboard",
+        callbackURL: "/overview",
       });
 
       if (result.error) {
@@ -50,7 +50,7 @@ export function SignUpForm({
           result.error.message ?? "Unable to sign up. Please try again.",
         );
       } else {
-        router.push("/dashboard");
+        router.push("/overview");
       }
     } catch {
       setError("Unable to sign up. Please try again.");
@@ -66,7 +66,7 @@ export function SignUpForm({
     try {
       await authClient.signIn.social({
         provider: "google",
-        callbackURL: "/dashboard",
+        callbackURL: "/overview",
       });
     } catch {
       setError("Google sign-up failed. Please try again.");
@@ -139,7 +139,13 @@ export function SignUpForm({
                   </FieldDescription>
                 ) : null}
                 <FieldDescription className="text-center">
-                  Already have an account? <Link href="/login" className="underline underline-offset-4 hover:text-primary">Login</Link>
+                  Already have an account?{" "}
+                  <Link
+                    href="/login"
+                    className="underline underline-offset-4 hover:text-primary"
+                  >
+                    Login
+                  </Link>
                 </FieldDescription>
               </Field>
             </FieldGroup>
