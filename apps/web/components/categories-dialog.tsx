@@ -337,7 +337,7 @@ export function CategoriesDialog({
                         {/* Icon Container */}
                         <div
                           className={cn(
-                            "flex items-center justify-center h-12 w-12 rounded-xl transition-transform group-hover:scale-110 flex-shrink-0",
+                            "flex items-center justify-center h-12 w-12 rounded-xl transition-transform group-hover:scale-110 shrink-0",
                             category.color,
                           )}
                         >
@@ -352,7 +352,7 @@ export function CategoriesDialog({
                         </div>
 
                         {/* Action Buttons */}
-                        <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex-shrink-0">
+                        <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200 shrink-0">
                           <Button
                             variant="ghost"
                             size="icon"
