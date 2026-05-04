@@ -23,3 +23,16 @@ export const GET_EXPENSES = gql(`
     }
   }
 `);
+
+export const GET_INCOME = gql(`
+  query GetIncome {
+    incomes {
+      id
+      name
+      description
+      amount
+      createdAt
+      categoryId
+    }
+  }
+`);

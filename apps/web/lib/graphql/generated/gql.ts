@@ -19,8 +19,12 @@ type Documents = {
     "\n  mutation CreateExpense($input: CreateExpenseInput!) {\n    createExpense(createExpenseInput: $input) {\n      success\n      message\n      expense {\n        id\n        name\n        description\n        amount\n        createdAt\n        categoryId\n      }\n    }\n  }\n": typeof types.CreateExpenseDocument,
     "\n  mutation UpdateExpense($input: UpdateExpenseInput!) {\n    updateExpense(updateExpenseInput: $input) {\n      success\n      message\n      expense {\n        id\n        name\n        description\n        amount\n        createdAt\n        categoryId\n      }\n    }\n  }\n": typeof types.UpdateExpenseDocument,
     "\n  mutation RemoveExpense($id: String!) {\n    removeExpense(id: $id) {\n      success\n      message\n    }\n  }\n": typeof types.RemoveExpenseDocument,
+    "\n  mutation CreateIncome($input: CreateIncomeInput!) {\n    createIncome(createIncomeInput: $input) {\n      success\n      message\n      income {\n        id\n        name\n        description\n        amount\n        createdAt\n        categoryId\n      }\n    }\n  }\n": typeof types.CreateIncomeDocument,
+    "\n  mutation UpdateIncome($input: UpdateIncomeInput!) {\n    updateIncome(updateIncomeInput: $input) {\n      success\n      message\n      income {\n        id\n        name\n        description\n        amount\n        createdAt\n        categoryId\n      }\n    }\n  }\n": typeof types.UpdateIncomeDocument,
+    "\n  mutation RemoveIncome($id: String!) {\n    removeIncome(id: $id) {\n      success\n      message\n    }\n  }\n": typeof types.RemoveIncomeDocument,
     "\n  query GetCategories {\n    categories {\n      id\n      name\n      iconName\n      createdAt\n    }\n  }\n": typeof types.GetCategoriesDocument,
     "\n  query GetExpenses {\n    expenses {\n      id\n      name\n      description\n      amount\n      createdAt\n      categoryId\n    }\n  }\n": typeof types.GetExpensesDocument,
+    "\n  query GetIncome {\n    incomes {\n      id\n      name\n      description\n      amount\n      createdAt\n      categoryId\n    }\n  }\n": typeof types.GetIncomeDocument,
 };
 const documents: Documents = {
     "\n  mutation RemoveCategory($id: String!) {\n    removeCategory(id: $id) {\n      success\n      message\n    }\n  }\n": types.RemoveCategoryDocument,
@@ -28,8 +32,12 @@ const documents: Documents = {
     "\n  mutation CreateExpense($input: CreateExpenseInput!) {\n    createExpense(createExpenseInput: $input) {\n      success\n      message\n      expense {\n        id\n        name\n        description\n        amount\n        createdAt\n        categoryId\n      }\n    }\n  }\n": types.CreateExpenseDocument,
     "\n  mutation UpdateExpense($input: UpdateExpenseInput!) {\n    updateExpense(updateExpenseInput: $input) {\n      success\n      message\n      expense {\n        id\n        name\n        description\n        amount\n        createdAt\n        categoryId\n      }\n    }\n  }\n": types.UpdateExpenseDocument,
     "\n  mutation RemoveExpense($id: String!) {\n    removeExpense(id: $id) {\n      success\n      message\n    }\n  }\n": types.RemoveExpenseDocument,
+    "\n  mutation CreateIncome($input: CreateIncomeInput!) {\n    createIncome(createIncomeInput: $input) {\n      success\n      message\n      income {\n        id\n        name\n        description\n        amount\n        createdAt\n        categoryId\n      }\n    }\n  }\n": types.CreateIncomeDocument,
+    "\n  mutation UpdateIncome($input: UpdateIncomeInput!) {\n    updateIncome(updateIncomeInput: $input) {\n      success\n      message\n      income {\n        id\n        name\n        description\n        amount\n        createdAt\n        categoryId\n      }\n    }\n  }\n": types.UpdateIncomeDocument,
+    "\n  mutation RemoveIncome($id: String!) {\n    removeIncome(id: $id) {\n      success\n      message\n    }\n  }\n": types.RemoveIncomeDocument,
     "\n  query GetCategories {\n    categories {\n      id\n      name\n      iconName\n      createdAt\n    }\n  }\n": types.GetCategoriesDocument,
     "\n  query GetExpenses {\n    expenses {\n      id\n      name\n      description\n      amount\n      createdAt\n      categoryId\n    }\n  }\n": types.GetExpensesDocument,
+    "\n  query GetIncome {\n    incomes {\n      id\n      name\n      description\n      amount\n      createdAt\n      categoryId\n    }\n  }\n": types.GetIncomeDocument,
 };
 
 /**
@@ -69,11 +77,27 @@ export function gql(source: "\n  mutation RemoveExpense($id: String!) {\n    rem
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
+export function gql(source: "\n  mutation CreateIncome($input: CreateIncomeInput!) {\n    createIncome(createIncomeInput: $input) {\n      success\n      message\n      income {\n        id\n        name\n        description\n        amount\n        createdAt\n        categoryId\n      }\n    }\n  }\n"): (typeof documents)["\n  mutation CreateIncome($input: CreateIncomeInput!) {\n    createIncome(createIncomeInput: $input) {\n      success\n      message\n      income {\n        id\n        name\n        description\n        amount\n        createdAt\n        categoryId\n      }\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  mutation UpdateIncome($input: UpdateIncomeInput!) {\n    updateIncome(updateIncomeInput: $input) {\n      success\n      message\n      income {\n        id\n        name\n        description\n        amount\n        createdAt\n        categoryId\n      }\n    }\n  }\n"): (typeof documents)["\n  mutation UpdateIncome($input: UpdateIncomeInput!) {\n    updateIncome(updateIncomeInput: $input) {\n      success\n      message\n      income {\n        id\n        name\n        description\n        amount\n        createdAt\n        categoryId\n      }\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  mutation RemoveIncome($id: String!) {\n    removeIncome(id: $id) {\n      success\n      message\n    }\n  }\n"): (typeof documents)["\n  mutation RemoveIncome($id: String!) {\n    removeIncome(id: $id) {\n      success\n      message\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
 export function gql(source: "\n  query GetCategories {\n    categories {\n      id\n      name\n      iconName\n      createdAt\n    }\n  }\n"): (typeof documents)["\n  query GetCategories {\n    categories {\n      id\n      name\n      iconName\n      createdAt\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "\n  query GetExpenses {\n    expenses {\n      id\n      name\n      description\n      amount\n      createdAt\n      categoryId\n    }\n  }\n"): (typeof documents)["\n  query GetExpenses {\n    expenses {\n      id\n      name\n      description\n      amount\n      createdAt\n      categoryId\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  query GetIncome {\n    incomes {\n      id\n      name\n      description\n      amount\n      createdAt\n      categoryId\n    }\n  }\n"): (typeof documents)["\n  query GetIncome {\n    incomes {\n      id\n      name\n      description\n      amount\n      createdAt\n      categoryId\n    }\n  }\n"];
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};

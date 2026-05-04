@@ -68,3 +68,51 @@ mutation RemoveExpense($id: String!) {
     message
   }
 }
+
+query GetIncome {
+  incomes {
+    id
+    name
+    description
+    amount
+    createdAt
+    categoryId
+  }
+}
+
+mutation CreateIncome($input: CreateIncomeInput!) {
+  createIncome(createIncomeInput: $input) {
+    success
+    message
+    income {
+      id
+      name
+      description
+      amount
+      createdAt
+      categoryId
+    }
+  }
+}
+
+mutation UpdateIncome($input: UpdateIncomeInput!) {
+  updateIncome(updateIncomeInput: $input) {
+    success
+    message
+    income {
+      id
+      name
+      description
+      amount
+      createdAt
+      categoryId
+    }
+  }
+}
+
+mutation RemoveIncome($id: String!) {
+  removeIncome(id: $id) {
+    success
+    message
+  }
+}

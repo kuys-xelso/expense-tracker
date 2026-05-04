@@ -67,3 +67,46 @@ export const REMOVE_EXPENSE = gql(`
     }
   }
 `);
+
+export const CREATE_INCOME = gql(`
+  mutation CreateIncome($input: CreateIncomeInput!) {
+    createIncome(createIncomeInput: $input) {
+      success
+      message
+      income {
+        id
+        name
+        description
+        amount
+        createdAt
+        categoryId
+      }
+    }
+  }
+`);
+
+export const UPDATE_INCOME = gql(`
+  mutation UpdateIncome($input: UpdateIncomeInput!) {
+    updateIncome(updateIncomeInput: $input) {
+      success
+      message
+      income {
+        id
+        name
+        description
+        amount
+        createdAt
+        categoryId
+      }
+    }
+  }
+`);
+
+export const REMOVE_INCOME = gql(`
+  mutation RemoveIncome($id: String!) {
+    removeIncome(id: $id) {
+      success
+      message
+    }
+  }
+`);
