@@ -23,6 +23,7 @@ import {
   Dumbbell,
   Plane,
   Briefcase,
+  PieChartIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -42,6 +43,7 @@ import {
 } from "@/lib/graphql/mutations";
 import { DataTable } from "./data-table";
 import { columns, type Expenses } from "./column";
+import { CategoriesDialog } from "@/components/categories-dialog";
 
 type CategoryItem = { id: string; name: string; iconName: string };
 type ExpenseItem = {
@@ -76,6 +78,7 @@ export default function ExpensesPage() {
   const [error, setError] = useState<string | null>(null);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isCategoriesDialogOpen, setIsCategoriesDialogOpen] = useState(false);
   const [form, setForm] = useState({
     name: "",
     description: "",
@@ -192,25 +195,36 @@ export default function ExpensesPage() {
             Monitor and control your spending habits.
           </p>
         </div>
-        <Button
-          size="lg"
-          variant="destructive"
-          className="shadow-lg hover:shadow-xl transition-all"
-          onClick={() => {
-            setEditingId(null);
-            setForm((prev) => ({
-              ...prev,
-              name: "",
-              description: "",
-              amount: "",
-              categoryId: prev.categoryId || categories[0]?.id || "",
-            }));
-            setIsModalOpen(true);
-          }}
-        >
-          <Plus className="mr-2 h-5 w-5" />
-          Add Expense
-        </Button>
+        <div className="flex gap-2">
+          <Button
+            size="lg"
+            variant="outline"
+            className="shadow-lg hover:shadow-xl transition-all "
+            onClick={() => setIsCategoriesDialogOpen(true)}
+          >
+            <PieChartIcon className="mr-2 h-5 w-5" />
+            Create category
+          </Button>
+          <Button
+            size="lg"
+            variant="destructive"
+            className="shadow-lg hover:shadow-xl transition-all"
+            onClick={() => {
+              setEditingId(null);
+              setForm((prev) => ({
+                ...prev,
+                name: "",
+                description: "",
+                amount: "",
+                categoryId: prev.categoryId || categories[0]?.id || "",
+              }));
+              setIsModalOpen(true);
+            }}
+          >
+            <Plus className="mr-2 h-5 w-5" />
+            Add Expense
+          </Button>
+        </div>
       </div>
       <Sheet open={isModalOpen} onOpenChange={setIsModalOpen}>
         <SheetContent className="sm:max-w-lg overflow-y-auto">
@@ -315,6 +329,10 @@ export default function ExpensesPage() {
       ) : (
         <DataTable columns={columns({ onEdit, onDelete })} data={data} />
       )}
+      <CategoriesDialog
+        open={isCategoriesDialogOpen}
+        onOpenChange={setIsCategoriesDialogOpen}
+      />
     </div>
   );
 }
